@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Tiruppur Garments B2B Platform
 
 A modern, full-stack web application designed for Tiruppur garment manufacturers to receive and manage bulk wholesale orders from B2B clients.
@@ -74,3 +75,6 @@ npm run dev
 - **Authentication**: JWT secured protected routes.
 
 Enjoy building with GJ TEX!
+=======
+# GJ-Tex
+>>>>>>> 31a3a346a711a6b234574923469bf61c619ec0bd
