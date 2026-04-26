@@ -3,6 +3,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
 import { UserPlus, ArrowRight, Mail, Phone, CheckCircle2, Loader2, Smartphone } from 'lucide-react';
+import { API_URL } from '../api';
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -82,7 +83,7 @@ const Register = () => {
             const payload = isPhone
                 ? { phone: identifier, email: formData.email }
                 : { email: identifier };
-            const { data } = await axios.post('http://localhost:5000/api/auth/send-otp', payload);
+            const { data } = await axios.post(`${API_URL}/api/auth/send-otp`, payload);
             setOtpSent(true);
             setOtpChannel(data.channel || otpMethod);
             setCountdown(60);
@@ -105,7 +106,7 @@ const Register = () => {
             const payload = otpMethod === 'phone'
                 ? { phone: formData.phone, otp }
                 : { email: formData.email, otp };
-            const { data } = await axios.post('http://localhost:5000/api/auth/verify-otp', payload);
+            const { data } = await axios.post(`${API_URL}/api/auth/verify-otp`, payload);
             setOtpToken(data.otpToken);
             setVerified(true);
         } catch (err) {
@@ -129,7 +130,7 @@ const Register = () => {
         try {
             setLoading(true);
             setError('');
-            const { data } = await axios.post('http://localhost:5000/api/auth/register', {
+            const { data } = await axios.post(`${API_URL}/api/auth/register`, {
                 ...formData,
                 otpToken
             });

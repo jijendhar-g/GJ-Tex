@@ -2,6 +2,7 @@ import { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
 import { User, Lock, Save, AlertCircle, CheckCircle, Building, Phone, Mail } from 'lucide-react';
+import { API_URL } from '../api';
 
 const MyAccount = () => {
     const { user, login } = useContext(AuthContext);
@@ -24,7 +25,7 @@ const MyAccount = () => {
         const fetchProfile = async () => {
             try {
                 const config = { headers: { Authorization: `Bearer ${user.token}` } };
-                const { data } = await axios.get('http://localhost:5000/api/auth/profile', config);
+                const { data } = await axios.get(`${API_URL}/api/auth/profile`, config);
                 setName(data.name || '');
                 setCompanyName(data.companyName || '');
                 setPhone(data.phone || '');
@@ -44,7 +45,7 @@ const MyAccount = () => {
 
         try {
             const config = { headers: { Authorization: `Bearer ${user.token}` } };
-            const { data } = await axios.put('http://localhost:5000/api/auth/profile', {
+            const { data } = await axios.put(`${API_URL}/api/auth/profile`, {
                 name, companyName, phone
             }, config);
 
@@ -73,7 +74,7 @@ const MyAccount = () => {
 
         try {
             const config = { headers: { Authorization: `Bearer ${user.token}` } };
-            await axios.put('http://localhost:5000/api/auth/change-password', {
+            await axios.put(`${API_URL}/api/auth/change-password`, {
                 currentPassword, newPassword
             }, config);
 

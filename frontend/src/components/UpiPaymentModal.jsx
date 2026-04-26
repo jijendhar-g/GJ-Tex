@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import axios from 'axios';
 import { ShieldCheck, X, CheckCircle, Loader2, QrCode, AlertCircle, RefreshCw, ExternalLink, Smartphone, XCircle } from 'lucide-react';
+import { API_URL } from '../api';
 
 const POLL_INTERVAL = 4000; // 4 seconds
 const MAX_POLL_DURATION = 10 * 60 * 1000; // 10 minutes timeout
@@ -31,7 +32,7 @@ const UpiPaymentModal = ({ amount, token, customerName, customerEmail, customerM
         const initiate = async () => {
             try {
                 const { data } = await axios.post(
-                    'http://localhost:5000/api/payment/upi-initiate',
+                    `${API_URL}/api/payment/upi-initiate`,
                     { amount, customerName, customerEmail, customerMobile },
                     config
                 );
@@ -73,7 +74,7 @@ const UpiPaymentModal = ({ amount, token, customerName, customerEmail, customerM
 
             try {
                 const { data } = await axios.post(
-                    'http://localhost:5000/api/payment/upi-status',
+                    `${API_URL}/api/payment/upi-status`,
                     { clientTxnId },
                     config
                 );

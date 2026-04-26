@@ -9,7 +9,9 @@ import {
 } from 'lucide-react';
 import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend, ComposedChart, Line } from 'recharts';
 
-const API = 'http://localhost:5000/api';
+import { API_URL } from '../../api';
+
+const API = `${API_URL}/api`;
 
 const AdminDashboard = () => {
     const { user } = useContext(AuthContext);
@@ -623,7 +625,7 @@ const AdminDashboard = () => {
                                                         <td className="p-4 text-xs text-gray-500 max-w-[200px]">
                                                             <p className="truncate">{order.customizationDetails || 'No details'}</p>
                                                             {order.logoUrl && (
-                                                                <a href={`http://localhost:5000${order.logoUrl}`} target="_blank" rel="noreferrer" className="text-brand hover:underline mt-1 block">View File</a>
+                                                                <a href={`${window.location.origin}${order.logoUrl}`} target="_blank" rel="noreferrer" className="text-brand hover:underline mt-1 block">View File</a>
                                                             )}
                                                         </td>
                                                         <td className="p-4">
@@ -706,7 +708,7 @@ const AdminDashboard = () => {
                                                 <div key={product._id} className="bg-white rounded-2xl border border-gray-100 shadow-card overflow-hidden group">
                                                     <div className="h-48 bg-gray-100 overflow-hidden relative">
                                                         <img
-                                                            src={(product.images?.[0]?.startsWith('http') || product.images?.[0]?.startsWith('/images/')) ? product.images[0] : `http://localhost:5000${product.images?.[0] || ''}`}
+                                                            src={product.images?.[0]?.startsWith('http') ? product.images[0] : `${window.location.origin}${product.images?.[0] || ''}`}
                                                             alt={product.title}
                                                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                                                             onError={(e) => { e.target.src = 'https://placehold.co/400x300?text=No+Image'; }}

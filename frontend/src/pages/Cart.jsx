@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { CartContext } from '../context/CartContext';
 import { AuthContext } from '../context/AuthContext';
 import { Trash2, Plus, Minus, ShoppingBag, ArrowRight, ArrowLeft } from 'lucide-react';
+import { API_URL } from '../api';
 
 const Cart = () => {
     const { cartItems, removeFromCart, updateQuantity, clearCart } = useContext(CartContext);
@@ -65,7 +66,7 @@ const Cart = () => {
                             <div key={item._id} className="bg-white rounded-2xl border border-gray-100 shadow-card p-6 flex gap-6 items-center">
                                 <div className="w-24 h-24 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0">
                                     <img
-                                        src={item.image?.startsWith('http') || item.image?.startsWith('/images/') ? item.image : `http://localhost:5000${item.image}`}
+                                        src={item.image?.startsWith('http') ? item.image : `${window.location.origin}${item.image}`}
                                         alt={item.title}
                                         className="w-full h-full object-cover"
                                     />

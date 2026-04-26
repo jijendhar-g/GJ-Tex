@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { ArrowLeft, Package, Ruler, Droplets, Info, ArrowRight, CheckCircle2, Phone, ShoppingCart, Plus, Minus, Check, Ban } from 'lucide-react';
 import { CartContext } from '../context/CartContext';
+import { API_URL } from '../api';
 
 const ProductDetail = () => {
     const { id } = useParams();
@@ -21,7 +22,7 @@ const ProductDetail = () => {
         const fetchProduct = async () => {
             try {
                 setLoading(true);
-                const { data } = await axios.get(`http://localhost:5000/api/products/${id}`);
+                const { data } = await axios.get(`${API_URL}/api/products/${id}`);
                 setProduct(data);
                 setLoading(false);
             } catch (err) {
@@ -52,8 +53,12 @@ const ProductDetail = () => {
     );
 
     const images = product.images?.length > 0
-        ? product.images.map(img => (img.startsWith('http') || img.startsWith('/images/')) ? img : `http://localhost:5000${img}`)
-        : ['/images/hero-garments.png'];
+        ? product.images.map(img =>
+              img.startsWith('http')
+                  ? img
+                  : `${window.location.origin}${img}`
+          )
+        : [`${window.location.origin}/images/hero-garments.png`];
 
     const isOutOfStock = product.availableQuantity <= 0;
     const genderIcon = product.gender === 'Men' ? '👔' : product.gender === 'Women' ? '👗' : '🔀';

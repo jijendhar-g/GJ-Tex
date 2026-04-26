@@ -49,7 +49,13 @@ connectDB().then(() => {
 });
 
 // Middleware
-app.use(cors());
+app.use(cors({
+    origin: [
+        'http://localhost:5173',
+        'https://gjtex-garments.vercel.app'  // your Vercel URL
+    ],
+    credentials: true
+}));
 app.use(express.json());
 
 // Static folder for uploaded images

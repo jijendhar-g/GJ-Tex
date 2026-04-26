@@ -4,6 +4,7 @@ import axios from 'axios';
 import { CartContext } from '../context/CartContext';
 import { AuthContext } from '../context/AuthContext';
 import { CheckCircle, Send, ArrowLeft, Package, MapPin, CreditCard, Banknote, ShieldCheck, X, QrCode } from 'lucide-react';
+import { API_URL } from '../api';
 
 const Checkout = () => {
     const { cartItems, clearCart } = useContext(CartContext);
@@ -80,10 +81,10 @@ const Checkout = () => {
             const config = { headers: { Authorization: `Bearer ${user.token}` } };
 
             // 1. Create Order
-            const { data: order } = await axios.post('http://localhost:5000/api/payment/create-order', { amount: cartTotal }, config);
+            const { data: order } = await axios.post(`${API_URL}/api/payment/create-order`, { amount: cartTotal }, config);
 
             // 2. Get Razorpay Key
-            const { data: { key } } = await axios.get('http://localhost:5000/api/payment/key', config);
+            const { data: { key } } = await axios.get(`${API_URL}/api/payment/key`, config);
 
             const options = {
                 key,
@@ -101,7 +102,7 @@ const Checkout = () => {
                     try {
                         setProcessingPayment(true);
                         // 3. Verify Payment
-                        const verifyRes = await axios.post('http://localhost:5000/api/payment/verify', response, config);
+                        const verifyRes = await axios.post(`${API_URL}/api/payment/verify`, response, config);
 
                         if (verifyRes.data.success) {
                             // 4. Place Order in our DB
@@ -154,7 +155,7 @@ const Checkout = () => {
                 price: item.price
             }));
 
-            await axios.post('http://localhost:5000/api/orders', {
+            await axios.post(`${API_URL}/api/orders`, {
                 orderItems: orderItemsPayload,
                 totalPrice: cartTotal,
                 contactDetails: {
@@ -386,7 +387,7 @@ const Checkout = () => {
                                     <div key={item._id} className="flex gap-3 items-center">
                                         <div className="w-14 h-14 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
                                             <img
-                                                src={item.image?.startsWith('http') || item.image?.startsWith('/images/') ? item.image : `http://localhost:5000${item.image}`}
+                                                src={item.image?.startsWith('http') ? item.image : `${window.location.origin}${item.image}`}
                                                 alt={item.title}
                                                 className="w-full h-full object-cover"
                                             />

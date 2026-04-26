@@ -2,6 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useContext, useState } from 'react';
 import { ArrowRight, ShoppingCart, Check, Ban } from 'lucide-react';
 import { CartContext } from '../context/CartContext';
+import { API_URL } from '../api';
 
 const ProductCard = ({ product }) => {
     const { cartItems, addToCart } = useContext(CartContext);
@@ -34,10 +35,10 @@ const ProductCard = ({ product }) => {
             <div className="relative h-72 overflow-hidden bg-gray-100">
                 <img
                     src={product.images && product.images.length > 0
-                        ? (product.images[0].startsWith('http') || product.images[0].startsWith('/images/')
+                        ? (product.images[0].startsWith('http')
                             ? product.images[0]
-                            : `http://localhost:5000${product.images[0]}`)
-                        : '/images/hero-garments.png'}
+                            : `${window.location.origin}${product.images[0]}`)
+                        : `${window.location.origin}/images/hero-garments.png`}
                     alt={product.title}
                     className={`w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ${isOutOfStock ? 'opacity-60 grayscale' : ''}`}
                 />

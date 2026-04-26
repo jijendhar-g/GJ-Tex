@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, CheckCircle2, Star, Truck, Shield, Factory, Award, Phone, Zap, Users, ChevronLeft, ChevronRight, Tag } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
+import { API_URL } from '../api';
 
 // Animated counter component
 const Counter = ({ target, suffix = '', prefix = '' }) => {
@@ -57,7 +58,7 @@ const AdCarousel = () => {
     const carouselRef = useRef(null);
 
     useEffect(() => {
-        axios.get('http://localhost:5000/api/admin/ads/public')
+        axios.get(`${API_URL}/api/admin/ads/public`)
             .then(res => setAds(res.data.length >= 1 ? res.data : DEFAULT_ADS))
             .catch(() => setAds(DEFAULT_ADS));
     }, []);

@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import { API_URL } from '../api';
 
 const Dashboard = () => {
     const { user } = useContext(AuthContext);
@@ -24,7 +25,7 @@ const Dashboard = () => {
         const fetchMyOrders = async () => {
             try {
                 const config = { headers: { Authorization: `Bearer ${user.token}` } };
-                const { data } = await axios.get('http://localhost:5000/api/orders/myorders', config);
+                const { data } = await axios.get(`${API_URL}/api/orders/myorders`, config);
                 setOrders(data);
             } catch (error) {
                 console.error('Failed to fetch orders');

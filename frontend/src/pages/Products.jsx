@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import ProductCard from '../components/ProductCard';
 import { Filter, Search, X, SlidersHorizontal } from 'lucide-react';
+import { API_URL } from '../api';
 
 const Products = () => {
     const [products, setProducts] = useState([]);
@@ -17,7 +18,7 @@ const Products = () => {
     const fetchProducts = async () => {
         try {
             setLoading(true);
-            let url = 'http://localhost:5000/api/products?';
+            let url = `${API_URL}/api/products?`;
             if (category) url += `category=${category}&`;
             if (keyword) url += `keyword=${keyword}&`;
             if (gender && gender !== 'All') url += `gender=${gender}`;

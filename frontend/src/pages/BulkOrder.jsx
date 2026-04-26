@@ -3,6 +3,7 @@ import { useSearchParams, useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
 import { Send, UploadCloud, AlertCircle } from 'lucide-react';
+import { API_URL } from '../api';
 
 const BulkOrder = () => {
     const { user } = useContext(AuthContext);
@@ -29,7 +30,7 @@ const BulkOrder = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const { data } = await axios.get('http://localhost:5000/api/products');
+                const { data } = await axios.get(`${API_URL}/api/products`);
                 setProducts(data.products || data);
             } catch (err) {
                 console.error("Failed to load products for dropdown");
@@ -71,7 +72,7 @@ const BulkOrder = () => {
                     Authorization: `Bearer ${user.token}`
                 }
             };
-            await axios.post('http://localhost:5000/api/orders', submitData, config);
+            await axios.post(`${API_URL}/api/orders`, submitData, config);
             setSuccess(true);
             setLoading(false);
             // reset form
